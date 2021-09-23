@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Wilder from "./components/wilder/Wilder";
+import axios from "axios";
 
 function App() {
+  const [wilders, setwilders] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios("http://localhost:5000/api/wilder/read");
+        setwilders(result.data.result);
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [wilders]);
+
+  const styles = {
+    body: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+    },
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Wilders</h1>
+      <ul style={styles.body}>
+        {wilders.map((wilder) => (
+          <Wilder
+            key={wilder.name}
+            image="logo192.png"
+            name={wilder.name}
+            city={wilder.city}
+            skills={wilder.skills}
+          ></Wilder>
+        ))}
+      </ul>
     </div>
   );
 }
