@@ -43,7 +43,7 @@ const AddWilder: React.FC = () => {
         value={name}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
       />
-      <label htmlFor="city-input">Name : </label>
+      <label htmlFor="city-input">City : </label>
       <input
         id="city-input"
         type="text"
